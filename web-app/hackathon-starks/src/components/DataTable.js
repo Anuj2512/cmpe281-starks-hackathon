@@ -1,15 +1,26 @@
 import React, {Component} from 'react';
+import * as API from '../Api/Api';
 
 class Datatable extends Component{
     state = {
         data: [
-            ["<a>datatables.net/examples/styling/bootstrap4.html</a>", "12 minutes ago", "https://goo.gl/8nKaHu", 2],
-            ["docs.basho.com/riak/kv/2.2.3/developing/getting-started", "12 minutes ago", "https://goo.gl/8nKaHu", 1],
-            ["datatables.net/examples/styling/bootstrap4.html", "12 minutes ago", "https://goo.gl/8nKaHu", 4],
-            ["docs.basho.com/riak/kv/2.2.3/developing/getting-started", "12 minutes ago", "https://goo.gl/8nKaHu", 5]
         ]
     }
-        
+
+    componentWillMount(){
+
+        API.getShortenURLList({})
+            .then((resData) => {
+                this.setState({
+                    data: resData
+                })
+            });
+    }
+    
+    componentDidUpdate(){
+        window.initDataTable();
+    }
+
     render(){
         let rows = [];
         for (var i = 0; i < this.state.data.length; i++){
@@ -19,8 +30,9 @@ class Datatable extends Component{
             let cellID = `cell${i}-${idx}`
 
             var value = this.state.data[i][idx];
-            if(idx % 2 == 0){
-                cell.push(<td key={cellID} id={cellID}> <a herf={value}> {value} </a> </td>)
+            if(idx % 2 === 0){
+                //cell.push(<td key={cellID} id={cellID} className="hyperlink"> <a herf={value}> {value} </a> </td>)
+                cell.push(<td key={cellID} id={cellID} className="hyperlink"> {value} </td>)
             }
             else{
                 cell.push(<td key={cellID} id={cellID}> {value} </td>)

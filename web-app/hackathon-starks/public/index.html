@@ -18,12 +18,22 @@
 
     <script>
       $(document).ready(function() {
-        $('#example').DataTable({ 
-        "fnDrawCallback": function( oSettings ) {
-            componentHandler.upgradeDOM();
-        }
-    });
-    } );
+
+      } );
+
+    function initDataTable(){
+      $('#example').DataTable();
+
+        //$('#cell1-0').on('click', 'a.update', function(e){ console.log("afsg")});
+        $('.hyperlink').on('click', function(event){
+          console.log(event);
+          var strURL = event.target.innerText;
+          if(strURL.indexOf("http") == -1){
+            strURL = "http://" + strURL;
+          }
+          window.open(strURL);
+        });
+    }
     </script>
 
     <!--
