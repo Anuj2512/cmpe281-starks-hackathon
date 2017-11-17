@@ -13,7 +13,7 @@ class AnalyticsHeader extends Component{
     }
 
     componentWillMount(){        
-        API.getShortenURLInfo(this.props.shortenedURL)
+        API.getAccessInfo(this.props.shortenedURL, "info")
             .then((resData) => {
                 this.setState({
                     viewCount: resData.viewCount,
