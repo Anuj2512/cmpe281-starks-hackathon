@@ -3,20 +3,34 @@ import * as API from '../Api/Api';
 
 class Shortner extends Component{
     state = {
-        inputdata : ""
+        inputdata : "",
+        ShortenURL: ""
     }
 
     onShortUrlClicked = (event) => {
         console.log(event);
+
         API.postShortenURL({
             url : this.state.inputdata
         })
         .then((resData) => {
-
+            if(resData.shortenURL){
+                this.setState({
+                    ShortenURL : resData.shortenURL
+                });
+            }
         });
+
     }
-        
+
     render(){
+
+        var ShortenURLInfo = "";
+
+        if(this.state.ShortenURL != ""){
+            ShortenURLInfo = <h3>Your Short URL : <a href={this.state.ShortenURL} className="badge badge-secondary shortURLInfo"> {this.state.ShortenURL} </a></h3>;
+        }
+
         return(
             <div className="Section-ShortenURL">
             
@@ -33,6 +47,13 @@ class Shortner extends Component{
                         
                     </div> 
                 </div>
+                <div className="row">
+                    <div className="col-md-8 offset-md-2">
+                        {ShortenURLInfo}
+                    </div>
+                </div>
+
+
             </div>
         )
     }
