@@ -31,3 +31,16 @@ export const postShortenURL = (payload) =>
             console.log("This is error");
             return error;
     });
+
+export const GetLinkAnalytics = (link) =>
+    fetch(`${SERVER_URL}/shortenURL/analytics/${link}`,{
+        method: 'GET',
+        headers: headers,
+    })
+    .then(res => {
+        return res.json();
+    })
+    .catch(error => {
+            console.log("This is error");
+            return error;
+    });

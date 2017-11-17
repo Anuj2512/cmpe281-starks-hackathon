@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Shortner from './components/Shortner';
-import DataTable from './components/DataTable';
+import HomePanel from './components/HomePanel';
+import {BrowserRouter} from 'react-router-dom';
 
 class App extends Component {
   // Initialize state
@@ -15,12 +15,13 @@ class App extends Component {
   render() {
 
     return (
-      <div className="App container-fluid">
+      <div className="App">
         <div className="row App-header">
           <div className="col col-md-4 offset-md-2">URL Shortner</div>
-        </div>
-          <Shortner/>
-          <DataTable/>
+        </div> 
+        <BrowserRouter>
+          <HomePanel/>
+        </BrowserRouter>
       </div>
     );
   }

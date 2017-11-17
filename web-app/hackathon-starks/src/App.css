@@ -76,3 +76,14 @@ table.dataTable th {border: none;}
   color: #039be5;
   cursor: pointer;
 }
+
+.AnalyticsHeader{
+  background-color: #eceff1;
+  padding: 10px;
+  text-align: center;
+}
+
+.alignCenter{
+  text-align: center;
+  cursor: pointer;
+}
