@@ -6,8 +6,19 @@ class CountryAccessInfo extends Component{
         labels: ["January", "February", "March", "April", "May", "June", "July"],
         data: [0, 10, 5, 2, 20, 30, 45]
     }
+
+    componentWillMount(){        
+        API.getAccessInfo(this.props.shortenedURL, "country")
+            .then((resData) => {
+                this.setState({
+                    labels: resData.labels,
+                    data: resData.data
+                })
+            });
+    }
+
         
-    componentDidMount(){
+    componentDidUpdate(){
         window.drawAccessInfoChart(this.state.labels, this.state.data, "CountryAccessInfo", "Countrywise Access Info");
     }
 

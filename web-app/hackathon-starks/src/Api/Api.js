@@ -18,6 +18,35 @@ export const getShortenURLList = (payload) =>
             return error;
     });
 
+export const getShortenURLInfo = (link) =>
+    fetch(`${SERVER_URL}/shortenURL/${link}`, {
+        method: 'GET',
+        headers: headers
+    })
+    .then(res => {
+        return res.json();
+    })
+    .catch(error => {
+            console.log("This is error");
+            return error;
+});
+
+export const getAccessInfo = (link, infoOf) =>
+    fetch(`${SERVER_URL}/shortenURL/${link}/${infoOf}}`, {
+        method: 'GET',
+        headers: headers
+    })
+    .then(res => {
+        return res.json();
+    })
+    .catch(error => {
+            console.log("This is error");
+            return error;
+});
+
+
+
+
 export const postShortenURL = (payload) =>
     fetch(`${SERVER_URL}/shortenURL`,{
         method: 'POST',

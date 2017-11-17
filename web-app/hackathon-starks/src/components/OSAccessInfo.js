@@ -7,7 +7,18 @@ class OSAccessInfo extends Component{
         data: [0, 10, 5, 2, 20, 30, 45]
     }
         
-    componentDidMount(){
+    componentWillMount(){        
+        API.getAccessInfo(this.props.shortenedURL, "os")
+            .then((resData) => {
+                this.setState({
+                    labels: resData.labels,
+                    data: resData.data
+                })
+            });
+    }
+
+
+    componentDidUpdate(){
         window.drawAccessInfoChart(this.state.labels, this.state.data, "OSAccessInfo", "OS Access Info");
     }
 

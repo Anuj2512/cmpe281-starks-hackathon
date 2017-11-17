@@ -7,17 +7,18 @@ class BrowserAccessInfo extends Component{
         data: [0, 10, 5, 2, 20, 30, 45]
     }
         
-    componentWillMount(){
-        
-        API.getShortenURLList({ url : "xyz"})
+
+    componentWillMount(){        
+        API.getAccessInfo(this.props.shortenedURL,"browser")
             .then((resData) => {
                 this.setState({
-                    data: resData
+                    labels: resData.labels,
+                    data: resData.data
                 })
             });
     }
 
-    componentDidMount(){
+    componentDidUpdate(){
         window.drawAccessInfoChart(this.state.labels, this.state.data, "BrowserAccessInfo", "Browserwise Access Info");
     }
 
