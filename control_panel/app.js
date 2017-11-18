@@ -1,4 +1,5 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 var db = require('./db');
 var cookieParser = require('cookie-parser');
@@ -15,16 +16,17 @@ var UrlController = require('./url/UrlController');
 app.set('view engine','html');
 app.set('views',__dirname + '/views');
 
-app.use(morgan('dev'));
-app.use(cookieParser());
-app.use(session({secret:"zxcvbnmzxcvbnm", resave:false, saveUninitialized:true}));
-app.use(express.static(__dirname + '/public'));
-
-app.use('/url', UrlController);
-
-app.get('/',function(req, res) {
-	res.sendFile(path.join(__dirname,''));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
+
+app.use(bodyParser.json());
+app.use(morgan('dev'));
+app.use(cookieParser());
+
+app.use('/', UrlController);
 
 module.exports = app;
