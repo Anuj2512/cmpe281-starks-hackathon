@@ -41,7 +41,6 @@ function createSlug(){
 // CREATES A NEW URL
 router.post('/url', function (req, res) {
      if(!req.body.custom){
-        console.log("no custom");
         var slugVal = createSlug();
         producer.send([{
             id: 'id1',
@@ -59,7 +58,6 @@ router.post('/url', function (req, res) {
             res.status(200).json(url);
         });
     } else{
-        console.log("Custom")
         var s = "http://thepk.xyz/" + req.body.custom;
 
         Url.findOne({slug: s}, function(err, url) {
