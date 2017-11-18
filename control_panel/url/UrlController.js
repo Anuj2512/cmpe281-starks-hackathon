@@ -3,6 +3,16 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: true }));
 var Url = require('./Url');
+var Producer = require('sqs-producer');
+ 
+ 
+// create custom producer (supporting all opts as per the API docs: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SQS.html#constructor-property)
+var producer = Producer.create({
+  queueUrl: 'https://sqs.us-west-1.amazonaws.com/977584754471/controlpanelqueue',
+  region: 'us-west-1',
+  accessKeyId: 'AKIAIEGAN5IFBPJJJSUA',
+  secretAccessKey: '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'
+});
 
 
 function createSlug(){
@@ -17,7 +27,7 @@ function createSlug(){
         map[i] = arr[i];
     }
     var x;
-    var text = "https://thepk.xyz/";
+    var text = "http://thepk.xyz/";
     var t; 
     for (i = 0; i<7;i++){
         x = Math.floor(Math.random()*62);
@@ -28,16 +38,56 @@ function createSlug(){
 }
 
 // CREATES A NEW URL
-router.post('/', function (req, res) {
-    var slugVal = createSlug();
-    Url.create({
+router.post('/url', function (req, res) {
+     if(!req.body.custom){
+        console.log("no custom");
+        var slugVal = createSlug();
+        producer.send([{
+            id: 'id1',
+            body: slugVal + ',' + req.body.destination
+        }], function(err) {
+                if (err) console.log(err);
+            });
+        Url.create({
             slug : slugVal,
-            destination : req.body.destination
+            destination : req.body.destination,
+            createdAt : new Date()
         }, 
         function (err, url) {
             if (err) return res.status(500).send("There was a problem adding the information to the database.");
-            res.status(200).send(url);
+            res.status(200).json({slug : url.slug});
         });
+    } else{
+        console.log("Custom")
+        var s = "http://thepk.xyz/" + req.body.custom;
+
+        Url.findOne({slug: s}, function(err, url) {
+        if(err){
+            return res.status(500).send("There was a problem finding the url.");
+        }
+        if(url) 
+            return res.json({error: 'Shortlink is already present! Try other names.'});
+        else{
+            producer.send([{
+                id: 'id1',
+                body: s + ',' + req.body.destination
+            }], function(err) {
+                if (err) console.log(err);
+            });
+            Url.create({
+                slug : s,
+                destination : req.body.destination,
+                createdAt: new Date()
+            }, 
+            function (err, url) {
+                if (err) return res.status(500).send("There was a problem adding the information to the database.");
+                return res.status(200).send(url);
+            });        
+        }
+
+    });  
+        
+    }
 });
 
 // CREATE A SHORT URL (OPTIONAL CUSTOM)
@@ -79,7 +129,7 @@ router.post('/d', function (req, res) {
 router.get('/urls', function (req, res) {
     Url.find({}, function (err, urls) {
         if (err) return res.status(500).send("There was a problem finding the urls.");
-        res.status(200).send(urls);
+        res.status(200).json(urls);
         //res.set('Content-Type','application/javascript; charset=utf-8');
     });
 });
