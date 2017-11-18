@@ -93,3 +93,7 @@ table.dataTable th {border: none;}
   background-color: #f5f5f5;
   padding: 10px 0px;
 }
+
+.error-msg{
+  padding: 20px;
+}

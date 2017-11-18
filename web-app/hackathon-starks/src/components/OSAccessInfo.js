@@ -8,7 +8,7 @@ class OSAccessInfo extends Component{
     }
         
     componentWillMount(){        
-        API.getAccessInfo(this.props.shortenedURL, "os")
+        API.getAccessInfo(this.props.shortenedURL, "platform")
             .then((resData) => {
 
                 var labels = [];

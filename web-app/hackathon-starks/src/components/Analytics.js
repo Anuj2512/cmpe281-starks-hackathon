@@ -19,13 +19,6 @@ class Analytics extends Component{
         this.setState({
             shortenedURL: this.props.match.params.id
         })
-
-        var self= this;
-        setTimeout(function(){
-            self.setState({
-                shortenedURL: "Updated URL"
-            })
-        }, 3000);
     }
 
     render(){

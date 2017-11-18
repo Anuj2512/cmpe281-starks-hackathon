@@ -1,5 +1,5 @@
-const CP_SERVER_URL = 'http://localhost:3002'
-const TREND_SERVER_URL = 'http://localhost:3002'
+const CP_SERVER_URL = 'http://ec2-52-53-175-64.us-west-1.compute.amazonaws.com:3000'
+const TREND_SERVER_URL = 'http://54.219.150.85'
 
 const headers = {
     'Accept': 'application/json',
@@ -35,8 +35,7 @@ export const postShortenURL = (payload) =>
 
 export const getAccessInfo = (link, infoOf) =>
     fetch(`${TREND_SERVER_URL}/trenddata/${link}/${infoOf}`, {
-        method: 'GET',
-        headers: headers
+        method: 'GET'
     })
     .then(res => {
         return res.json();

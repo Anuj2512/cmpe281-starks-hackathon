@@ -11,8 +11,8 @@ class AnalyticsHeader extends Component{
         API.getAccessInfo(this.props.shortenedURL, "info")
             .then((resData) => {
                 this.setState({
-                    viewCount: resData.viewCount,
-                    originalURL: resData.originalURL
+                    viewCount: resData[0].views,
+                    originalURL: resData[0].originalURL
                 })
             });
     }

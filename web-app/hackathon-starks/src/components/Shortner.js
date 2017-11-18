@@ -5,7 +5,8 @@ class Shortner extends Component{
     state = {
         inputdata : "",
         ShortenURL: "",
-        CustomURL: ""
+        CustomURL: "",
+        Error: ""
     }
 
     onShortUrlClicked = (event) => {
@@ -15,13 +16,25 @@ class Shortner extends Component{
         if(this.state.inputdata == "") return;
         reqObj.destination = this.state.inputdata;
         if(this.state.CustomURL != "")
-            reqObj.customurl = this.state.CustomURL;
+            reqObj.custom = this.state.CustomURL;
 
         API.postShortenURL(reqObj)
         .then((resData) => {
-            if(resData.shortenURL){
+
+            console.log(resData);
+
+            if(resData.error != null){
                 this.setState({
-                    ShortenURL : resData.slug
+                    Error: resData.error,
+                    ShortenURL: ""
+                });
+                return
+            }  
+
+            if(resData.slug){
+                this.setState({
+                    ShortenURL : resData.slug,
+                    Error : ""
                 });
             }
         });
@@ -57,12 +70,15 @@ class Shortner extends Component{
                         <input type="text" className="form-control" placeholder="Select custom URL here (optional)" 
                             onChange={(event) => this.setState({CustomURL: event.target.value})}></input>
                     </div>
+                    <div className="col-md-4 shorten-input error-msg">
+                            {this.state.Error}
+                    </div>
                 </div>
 
                 <div className="row">
                     <div className="col-md-8 offset-md-2">
-                        {ShortenURLInfo}
-                    </div>
+                            {ShortenURLInfo}
+                        </div>
                 </div>
 
 

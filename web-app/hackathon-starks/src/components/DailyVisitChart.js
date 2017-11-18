@@ -8,7 +8,7 @@ class DailyVisitChart extends Component{
     }
 
     componentWillMount(){        
-        API.getAccessInfo(this.props.shortenedURL,"dailyvisit")
+        API.getAccessInfo(this.props.shortenedURL,"dailyvisits")
             .then((resData) => {
                 var labels = [];
                 var clicks = [];
