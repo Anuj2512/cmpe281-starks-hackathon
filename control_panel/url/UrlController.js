@@ -37,6 +37,7 @@ function createSlug(){
     return text;
 }
 
+
 // CREATES A NEW URL
 router.post('/url', function (req, res) {
      if(!req.body.custom){
@@ -55,7 +56,7 @@ router.post('/url', function (req, res) {
         }, 
         function (err, url) {
             if (err) return res.status(500).send("There was a problem adding the information to the database.");
-            res.status(200).json({slug : url.slug});
+            res.status(200).json(url);
         });
     } else{
         console.log("Custom")
@@ -81,47 +82,12 @@ router.post('/url', function (req, res) {
             }, 
             function (err, url) {
                 if (err) return res.status(500).send("There was a problem adding the information to the database.");
-                return res.status(200).send(url);
+                return res.status(200).json(url);
             });        
         }
 
     });  
         
-    }
-});
-
-// CREATE A SHORT URL (OPTIONAL CUSTOM)
-router.post('/d', function (req, res) {
-    if(!req.body.custom){
-        console.log("No Custom")
-        var slugVal = createSlug();
-        Url.create({
-            slug : slugVal,
-            destination : req.body.destination
-        }, 
-        function (err, url) {
-            if (err) return res.status(500).send("There was a problem adding the information to the database.");
-            res.status(200).send(url);
-        });
-    }
-    else{
-        console.log("Custom")
-
-        // Get just slug value, here it is taking full short url.
-        var ck = Url.findOne({slug: req.body.custom},{slug:0})
-        console.log(ck)
-        if (!ck)
-        {
-        Url.create({
-            slug : req.body.custom,
-            destination : req.body.destination
-        }, 
-        function (err, url) {
-            if (err) return res.status(500).send("There was a problem adding the information to the database.");
-            res.status(200).send(url);
-        });
-        }
-        res.send("This ShortURL is already taken.")    
     }
 });
 
