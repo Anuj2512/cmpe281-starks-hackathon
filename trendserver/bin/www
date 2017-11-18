@@ -148,7 +148,7 @@ function sendData(message) {
     "ip": res[2],
     "country": res[3],
     "platform": res[4],
-    "browser": res[5]
+    "browser": res[5],
     "timestamp": timestamp
   };
  // console.log(requestData);
