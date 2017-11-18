@@ -7,7 +7,7 @@ const headers = {
 };
 
 export const getShortenURLList = (payload) =>
-    fetch(`${CP_SERVER_URL}/shortenURL`, {
+    fetch(`${CP_SERVER_URL}/urls`, {
         method: 'GET',
         headers: headers
     })
@@ -20,7 +20,7 @@ export const getShortenURLList = (payload) =>
     });
 
 export const postShortenURL = (payload) =>
-    fetch(`${CP_SERVER_URL}/shortenURL`,{
+    fetch(`${CP_SERVER_URL}/url`,{
         method: 'POST',
         headers: headers,
         body: JSON.stringify(payload)

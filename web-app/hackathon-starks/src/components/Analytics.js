@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import * as API from '../Api/Api';
+// import * as API from '../Api/Api';
 import OSAccessInfo from './OSAccessInfo';
 import BrowserAccessInfo from './BrowserAccessInfo';
 import CountryAccessInfo from './CountryAccessInfo';

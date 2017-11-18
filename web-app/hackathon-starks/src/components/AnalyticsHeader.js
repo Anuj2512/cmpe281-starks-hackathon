@@ -7,11 +7,6 @@ class AnalyticsHeader extends Component{
         originalURL: "OriginalURL"
     }
 
-    componentWillMount(){
-        console.log("AnalyticsHeader will mount: ");
-        console.log(this.props);
-    }
-
     componentWillMount(){        
         API.getAccessInfo(this.props.shortenedURL, "info")
             .then((resData) => {

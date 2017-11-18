@@ -4,23 +4,30 @@ import * as API from '../Api/Api';
 class DailyVisitChart extends Component{
     state = {
         labels: ["January", "February", "March", "April", "May", "June", "July"],
-        data: [0, 10, 5, 2, 20, 30, 25]
-    }
-    
-    componentWillMount(){
-
+        clicks: [0, 10, 5, 2, 20, 30, 25]
     }
 
-    componentDidMount(){
-        window.drawDailyVisitChart(this.state.labels, this.state.data);
-        // var self = this;
-        // setTimeout(function(){
-        //     self.setState({
-        //         labels: ["January", "February", "March", "April", "May", "June", "July"],
-        //         data : [59, 2, 20, 30, 4, 50, 10]
-        //     });
-        // }, 3000);
+    componentWillMount(){        
+        API.getAccessInfo(this.props.shortenedURL,"dailyvisit")
+            .then((resData) => {
+                var labels = [];
+                var clicks = [];
+
+                for(var i = 0; i < resData.length; i++){
+                    labels.push(resData[i].date);
+                    clicks.push(resData[i].clicks);
+                }
+
+                this.setState({
+                    labels: labels,
+                    clicks: clicks
+                })
+            });
     }
+
+    // componentDidMount(){
+    //     window.drawDailyVisitChart(this.state.labels, this.state.clicks);
+    // }
 
     componentDidUpdate(){
         window.drawDailyVisitChart(this.state.labels, this.state.data);

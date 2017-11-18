@@ -11,8 +11,19 @@ class Datatable extends Component{
 
         API.getShortenURLList({})
             .then((resData) => {
+
+                var dataArray = [];
+                for(var i = 0; i < resData.length; i++){
+                    var data = [];
+                    data.push(resData[i].destination);
+                    data.push(resData[i].timestamp);
+                    data.push(resData[i].slug);
+
+                    dataArray.push(data);
+                }
+
                 this.setState({
-                    data: resData
+                    data: dataArray
                 })
             });
     }

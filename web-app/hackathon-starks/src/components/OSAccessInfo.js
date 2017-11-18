@@ -4,22 +4,31 @@ import * as API from '../Api/Api';
 class OSAccessInfo extends Component{
     state = {
         labels: ["January", "February", "March", "April", "May", "June", "July"],
-        data: [0, 10, 5, 2, 20, 30, 45]
+        clicks: [0, 10, 5, 2, 20, 30, 45]
     }
         
     componentWillMount(){        
         API.getAccessInfo(this.props.shortenedURL, "os")
             .then((resData) => {
+
+                var labels = [];
+                var clicks = [];
+
+                for(var i = 0; i < resData.length; i++){
+                    labels.push(resData[i].platform);
+                    clicks.push(resData[i].clicks);
+                }
+
                 this.setState({
-                    labels: resData.labels,
-                    data: resData.data
+                    labels: labels,
+                    clicks: clicks
                 })
             });
     }
 
 
     componentDidUpdate(){
-        window.drawAccessInfoChart(this.state.labels, this.state.data, "OSAccessInfo", "OS Access Info");
+        window.drawAccessInfoChart(this.state.labels, this.state.clicks, "OSAccessInfo", "OS Access Info");
     }
 
 
