@@ -37,8 +37,8 @@ const AWS = require('aws-sdk');
 
 AWS.config.update({
   region: 'us-west-1',
-  accessKeyId: 'AKIAIEGAN5IFBPJJJSUA',
-  secretAccessKey: '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'
+  accessKeyId: 'AKIAJKXSW44AKTWZZYOA',
+  secretAccessKey: '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'
 });
 
 const awsapp = Consumer.create({
