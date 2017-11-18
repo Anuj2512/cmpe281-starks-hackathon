@@ -135,11 +135,12 @@ function onListening() {
  */
 
 function sendData(message) {
-  console.log(message.Body);
+  //console.log(message.Body);
   var str=message.Body;
   //var str="http://thepk.xyz/blockchain,https://www.blockchain.com,130.65.254.12,United States,Windows,Chrome";
   var res = str.split(",");
   var url = res[0].split("/");
+  var timestamp= (new Date().getMonth()+1)+"-"+(new Date().getDate())+"-"+(new Date().getFullYear());
 
   var requestData= {
     "shortenedURL": url[3],
@@ -148,8 +149,9 @@ function sendData(message) {
     "country": res[3],
     "platform": res[4],
     "browser": res[5]
+    "timestamp": timestamp
   };
-  console.log(requestData);
+ // console.log(requestData);
   db.collection("trenddata").insert(requestData, function(err, res) {
     if (err) throw err;
     console.log(res);
