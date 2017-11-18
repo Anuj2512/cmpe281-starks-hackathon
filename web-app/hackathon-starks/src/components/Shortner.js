@@ -3,20 +3,38 @@ import * as API from '../Api/Api';
 
 class Shortner extends Component{
     state = {
-        inputdata : ""
+        inputdata : "",
+        ShortenURL: "",
+        CustomURL: ""
     }
 
     onShortUrlClicked = (event) => {
         console.log(event);
-        API.postShortenURL({
-            url : this.state.inputdata
-        })
-        .then((resData) => {
 
+        var reqObj = {}
+        if(this.state.inputdata == "") return;
+        reqObj.destination = this.state.inputdata;
+        if(this.state.CustomURL != "")
+            reqObj.customurl = this.state.CustomURL;
+
+        API.postShortenURL(reqObj)
+        .then((resData) => {
+            if(resData.shortenURL){
+                this.setState({
+                    ShortenURL : resData.slug
+                });
+            }
         });
     }
-        
+
     render(){
+
+        var ShortenURLInfo = "";
+
+        if(this.state.ShortenURL !== ""){
+            ShortenURLInfo = <h3>Your Short URL : <a href={this.state.ShortenURL} className="badge badge-secondary shortURLInfo"> {this.state.ShortenURL} </a></h3>;
+        }
+
         return(
             <div className="Section-ShortenURL">
             
@@ -33,6 +51,21 @@ class Shortner extends Component{
                         
                     </div> 
                 </div>
+
+                <div className="row">
+                    <div className="col-md-4 offset-md-2 shorten-input">
+                        <input type="text" className="form-control" placeholder="Select custom URL here (optional)" 
+                            onChange={(event) => this.setState({CustomURL: event.target.value})}></input>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-8 offset-md-2">
+                        {ShortenURLInfo}
+                    </div>
+                </div>
+
+
             </div>
         )
     }

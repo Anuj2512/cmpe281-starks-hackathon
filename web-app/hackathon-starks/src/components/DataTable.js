@@ -11,14 +11,30 @@ class Datatable extends Component{
 
         API.getShortenURLList({})
             .then((resData) => {
+
+                var dataArray = [];
+                for(var i = 0; i < resData.length; i++){
+                    var data = [];
+                    data.push(resData[i].destination);
+                    data.push(resData[i].timestamp);
+                    data.push(resData[i].slug);
+
+                    dataArray.push(data);
+                }
+
                 this.setState({
-                    data: resData
+                    data: dataArray
                 })
             });
     }
-    
+
     componentDidUpdate(){
         window.initDataTable();
+    }
+
+    onShowAnalytics = (link) => {
+        var url = link.split("/").pop();
+        this.props.history.push("/analytics/" + url);
     }
 
     render(){
@@ -26,19 +42,15 @@ class Datatable extends Component{
         for (var i = 0; i < this.state.data.length; i++){
           let rowID = `row${i}`
           let cell = []
-          for (var idx = 0; idx < this.state.data[i].length; idx++){
-            let cellID = `cell${i}-${idx}`
 
-            var value = this.state.data[i][idx];
-            if(idx % 2 === 0){
-                //cell.push(<td key={cellID} id={cellID} className="hyperlink"> <a herf={value}> {value} </a> </td>)
-                cell.push(<td key={cellID} id={cellID} className="hyperlink"> {value} </td>)
-            }
-            else{
-                cell.push(<td key={cellID} id={cellID}> {value} </td>)
-            }
-          }
-          rows.push(<tr key={i} id={rowID}>{cell}</tr>)
+          var value = this.state.data[i][2];
+          
+          cell.push(<td  key={`cell${i}-${0}`} className="hyperlink"> {this.state.data[i][0]} </td>)
+          cell.push(<td key={`cell${i}-${1}`}> {this.state.data[i][1]} </td>)
+          cell.push(<td key={`cell${i}-${2}`} className="hyperlink"> {this.state.data[i][2]} </td>)
+          cell.push(<td key={`cell${i}-${3}`} className="alignCenter"  onClick={(event) => this.onShowAnalytics(value)}> <span className="fa fa-bar-chart"></span> <span className="fa  fa-pie-chart"><span className="fa  fa-line-chart"></span></span> </td>)
+
+          rows.push(<tr key={rowID}>{cell}</tr>)
         }
 
         return(
@@ -49,7 +61,7 @@ class Datatable extends Component{
                             <th>Original URL</th>
                             <th>Created</th>
                             <th>Short URL</th>
-                            <th>All Clicks</th>                            
+                            <th className="alignCenter">Analytics</th>                            
                         </tr>
                     </thead>
                     <tbody>

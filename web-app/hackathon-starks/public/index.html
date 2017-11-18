@@ -15,11 +15,94 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+    
     <script>
       $(document).ready(function() {
-
       } );
+    
+  function drawAccessInfoChart(labels, data, id, title){
+      
+      var randomColorGenerator = function () {
+        var array = [];
+        for (var i = 0; i < labels.length; i++){
+           array.push('#' + (Math.random().toString(16) + '0000000').slice(2, 8)); 
+        }
+          return array;
+      };
+
+      var ctx = document.getElementById(id).getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'pie',
+        
+            // The data for our dataset
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", 'rgba(153, 102, 255, 0.2)','rgba(255, 159, 64, 0.2)']
+                }]
+            },
+        
+            // Configuration options go here
+            options: {
+              title:{
+                  display: true,
+                  text: title
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    };      
+
+
+    function drawDailyVisitChart(labels, data){
+      
+      var ctx = document.getElementById('dailyVisitChart').getContext('2d');
+      ctx.height = 1000;
+
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+        
+            // The data for our dataset
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Daily Visits",
+                    
+                    borderColor: '#039be5',
+                    data: data,
+                }]
+            },
+        
+            // Configuration options go here
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    };      
 
     function initDataTable(){
       $('#example').DataTable();
@@ -33,7 +116,8 @@
           }
           window.open(strURL);
         });
-    }
+    };
+
     </script>
 
     <!--
