@@ -30,7 +30,7 @@ class DailyVisitChart extends Component{
     // }
 
     componentDidUpdate(){
-        window.drawDailyVisitChart(this.state.labels, this.state.data);
+        window.drawDailyVisitChart(this.state.labels, this.state.clicks);
     }
 
     render(){

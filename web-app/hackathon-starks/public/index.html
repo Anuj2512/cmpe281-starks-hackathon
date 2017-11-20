@@ -76,7 +76,7 @@
 
         var chart = new Chart(ctx, {
             // The type of chart we want to create
-            type: 'line',
+            type: 'bar',
         
             // The data for our dataset
             data: {
@@ -86,6 +86,7 @@
                     
                     borderColor: '#039be5',
                     data: data,
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", 'rgba(153, 102, 255, 0.2)','rgba(255, 159, 64, 0.2)']
                 }]
             },
         
@@ -106,17 +107,28 @@
 
     function initDataTable(){
       $('#example').DataTable();
-
-        //$('#cell1-0').on('click', 'a.update', function(e){ console.log("afsg")});
-        $('.hyperlink').on('click', function(event){
-          console.log(event);
-          var strURL = event.target.innerText;
-          if(strURL.indexOf("http") == -1){
-            strURL = "http://" + strURL;
-          }
-          window.open(strURL);
+        applyHyperlinks();
+        $('#example').on('page.dt', function (){
+            //console.log("Anuj");
+            applyHyperlinks();
         });
     };
+
+    function applyHyperlinks(){
+        //$('#cell1-0').on('click', 'a.update', function(e){ console.log("afsg")});
+
+        setTimeout(function(){
+
+            $('.hyperlink').on('click', function(event){
+                console.log(event);
+                var strURL = event.target.innerText;
+                if(strURL.indexOf("http") == -1){
+                    strURL = "http://" + strURL;
+                }
+                window.open(strURL);
+            });
+        }, 100);
+    }
 
     </script>
 

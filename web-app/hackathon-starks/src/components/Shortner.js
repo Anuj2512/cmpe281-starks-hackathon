@@ -45,7 +45,7 @@ class Shortner extends Component{
         var ShortenURLInfo = "";
 
         if(this.state.ShortenURL !== ""){
-            ShortenURLInfo = <h3>Your Short URL : <a href={this.state.ShortenURL} className="badge badge-secondary shortURLInfo"> {this.state.ShortenURL} </a></h3>;
+            ShortenURLInfo = <h3>Your Short URL : <a target="_blank" href={this.state.ShortenURL} className="badge badge-secondary shortURLInfo"> {this.state.ShortenURL} </a></h3>;
         }
 
         return(

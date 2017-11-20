@@ -75,7 +75,7 @@ class Datatable extends Component{
           cell.push(<td key={`cell${i}-${1}`}> {this.state.data[i][1]} </td>)
           cell.push(<td key={`cell${i}-${2}`} className="hyperlink"> {this.state.data[i][2]} </td>)
           cell.push(<td key={`cell${i}-${3}`} className="alignCenter" value={this.state.data[i][2]}  onClick={(event) => self.onShowAnalytics(event)}> <span className="fa fa-bar-chart"></span> <span className="fa  fa-pie-chart"><span className="fa  fa-line-chart"></span></span> </td>)
-
+          
           rows.push(<tr key={rowID}>{cell}</tr>)
         }
 

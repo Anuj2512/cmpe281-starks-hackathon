@@ -1,5 +1,5 @@
-const CP_SERVER_URL = 'http://ec2-52-53-175-64.us-west-1.compute.amazonaws.com:3000'
-const TREND_SERVER_URL = 'http://54.219.150.85'
+const CP_SERVER_URL = 'http://starks-836775965.us-west-1.elb.amazonaws.com' 
+const TREND_SERVER_URL = 'http://52.53.224.185'
 
 const headers = {
     'Accept': 'application/json',
@@ -15,7 +15,7 @@ export const getShortenURLList = (payload) =>
         return res.json();
     })
     .catch(error => {
-            console.log("This is error");
+            console.log("This is error ");
             return error;
     });
 
